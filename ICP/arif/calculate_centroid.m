@@ -1,8 +1,8 @@
-function centroid = calculate_centroid(A)
+function [centroid, A_shifted] = calculate_centroid(A)
   [rows cols] = size(A);
 
-  A_mean = mean(A, 1);
-  A_mean = repmat(A_mean, [rows, 1]);
+  centroid = mean(A, 1);
+  A_mean = repmat(centroid, [rows, 1]);
 
-  centroid = A - A_mean;
+  A_shifted = A - A_mean;
 end

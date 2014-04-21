@@ -11,7 +11,7 @@ function [R, t] = icp(file_path_1, file_path_2)
   t = 0;
 
   % Initialize number of iterations
-  n = 1;
+  n = 50;
 
   for ii=1:n
     % Find the closest point for each point in A1 to any point in A2 using KDTree
@@ -24,7 +24,7 @@ function [R, t] = icp(file_path_1, file_path_2)
     A2_match_point_indexes = IDX;
 
     A1_match_points = A1(A1_match_point_indexes, :);
-    A2_match_points = A1(A2_match_point_indexes, :);
+    A2_match_points = A2(A2_match_point_indexes, :);
 
     % Calculate centroid of matched points
     % and sifted to the origin of coordinate system
@@ -45,17 +45,22 @@ function [R, t] = icp(file_path_1, file_path_2)
     t = (A1_centroid - A2_centroid) * R;
 
     % Calculate new average distance target point clouds
-    TPC = (R * A2_shifted')' + repmat(t, [size(A2_shifted, 1), 1]);
+    TPC = (R * A2')' + repmat(t, [size(A2, 1), 1]);
+    TPC_match_points = TPC(A2_match_point_indexes, :);
 
     % find the average of  euclidan distance of the matched point pairs
     sum_distance = 0;
     for ii=1:size(A1_shifted, 1)
-      sum_distance = sum_distance + norm(A1_shifted(ii,:) - TPC(ii,:));
+      sum_distance = sum_distance + norm(A1(ii,:) - TPC_match_points(ii,:));
     end
-    average_distance = sum_distance / size(A1_shifted, 1);
+    average_distance = sum_distance / size(A1, 1);
 
     disp(average_distance);
 
+    % plot3(A1(:,1), A1(:,2), A1(:,3),'ro');
+    % plot3(TPC(:,1), TPC(:,2), TPC(:,3),'bo');
+
+    A2 = TPC;
   end
 
 end

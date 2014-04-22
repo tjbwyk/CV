@@ -1,7 +1,7 @@
-function [R, t] = ICP(B, T, TOL, TIME)
+function [R, t] = ICP(S, T, TOL, TIME)
 
     % Tranform to homogeneous coordinates
-    B_homo = [B, ones(length(B), 1)]';
+    S_homo = [S, ones(length(S), 1)]';
     T_homo = [T, ones(length(T), 1)]';
 
     % Initialize R, and identity matrix I

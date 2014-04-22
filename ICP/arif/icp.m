@@ -1,4 +1,4 @@
-function [R, t] = icp(file_path_1, file_path_2)
+function [R, t, Distance] = icp(file_path_1, file_path_2, n)
 
   % Import data
   A1 = importdata(file_path_1);
@@ -10,8 +10,13 @@ function [R, t] = icp(file_path_1, file_path_2)
   % Initialize t = 0
   t = 0;
 
-  % Initialize number of iterations
-  n = 50;
+  RMS = zeros(1, n);
+
+  % figure;
+  % hold on;
+
+  % h1 = plot3(A1(:,1), A1(:,2), A1(:,3),'ro');
+  % h2 = plot3(A2(:,1), A2(:,2), A2(:,3),'bo');
 
   for ii=1:n
     % Find the closest point for each point in A1 to any point in A2 using KDTree
@@ -50,15 +55,19 @@ function [R, t] = icp(file_path_1, file_path_2)
 
     % find the average of  euclidan distance of the matched point pairs
     sum_distance = 0;
-    for ii=1:size(A1_shifted, 1)
-      sum_distance = sum_distance + norm(A1(ii,:) - TPC_match_points(ii,:));
+    for jj=1:size(A1_shifted, 1)
+      sum_distance = sum_distance + norm(A1(jj,:) - TPC_match_points(jj,:));
     end
     average_distance = sum_distance / size(A1, 1);
 
     disp(average_distance);
+    Distance(1,ii) = average_distance;
 
-    % plot3(A1(:,1), A1(:,2), A1(:,3),'ro');
-    % plot3(TPC(:,1), TPC(:,2), TPC(:,3),'bo');
+    % delete(h1);
+    % delete(h2);
+    % h1 = plot3(A1(:,1), A1(:,2), A1(:,3),'ro');
+    % h2 = plot3(TPC(:,1), TPC(:,2), TPC(:,3),'bo');
+    % drawnow;
 
     A2 = TPC;
   end

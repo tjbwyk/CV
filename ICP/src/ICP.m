@@ -13,7 +13,7 @@ function [R, t] = ICP(B, T, TOL, TIME)
     % Initialize transformation matrix Tr under homogeneous coordinates
     Tr = eye(4);
     
-    % Build KDTree based on target cloud
+    % Build KDTree sourced on target cloud
     KDTree = KDTreeSearcher(T, 'distance', 'euclidean');
     
     % Initialize error
@@ -22,27 +22,27 @@ function [R, t] = ICP(B, T, TOL, TIME)
 
     for i = 1 : TIME
         
-        % Update the base cloud
-        B_homo_trans = Tr * B_homo;
+        % Update the source cloud
+        S_homo_trans = Tr * S_homo;
         
         % Find the closest point for each point in tranformed B to any point in T using KDTree
-        [IDX, D] = knnsearch(KDTree, B_homo_trans(1:3, :)');
+        [IDX, D] = knnsearch(KDTree, S_homo_trans(1:3, :)');
 
         % Get matched points from B and T
-        B_match_point_indexes = [1:size(IDX)]';
+        S_match_point_indexes = [1:size(IDX)]';
         T_match_point_indexes = IDX;
 
-        B_homo_match_points = B_homo_trans(:, B_match_point_indexes);
+        S_homo_match_points = S_homo_trans(:, S_match_point_indexes);
         T_homo_match_points = T_homo(:, T_match_point_indexes);
 
         % Calculate centroid of matched points
         % and sifted to the origin of coordinate system
-        [B_homo_centroid, B_homo_shifted] = calculate_centroid(B_homo_match_points);
+        [S_homo_centroid, S_homo_shifted] = calculate_centroid(S_homo_match_points);
         [T_homo_centroid, T_homo_shifted] = calculate_centroid(T_homo_match_points);
 
         % Merge 2 point clouds
         % Matrix multiplication operation
-        W = T_homo_shifted(1:3, :) * B_homo_shifted(1:3, :)';
+        W = T_homo_shifted(1:3, :) * S_homo_shifted(1:3, :)';
 
         % Apply SVD
         [U, S, V] = svd(W);
@@ -51,7 +51,7 @@ function [R, t] = ICP(B, T, TOL, TIME)
         R = U * V';
 
         % Calculate translation matrix
-        t = T_homo_centroid(1:3) - R * B_homo_centroid(1:3);
+        t = T_homo_centroid(1:3) - R * S_homo_centroid(1:3);
         
         % Calculate the homogeneous transformation matrix
         Tr(1:3, :) = [R, t];

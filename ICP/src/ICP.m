@@ -25,10 +25,10 @@ function [R, t] = ICP(S, T, TOL, TIME)
         % Update the source cloud
         S_homo_trans = Tr * S_homo;
         
-        % Find the closest point for each point in tranformed B to any point in T using KDTree
+        % Find the closest point for each point in tranformed S to any point in T using KDTree
         [IDX, D] = knnsearch(KDTree, S_homo_trans(1:3, :)');
 
-        % Get matched points from B and T
+        % Get matched points from S and T
         S_match_point_indexes = [1:size(IDX)]';
         T_match_point_indexes = IDX;
 
@@ -47,14 +47,14 @@ function [R, t] = ICP(S, T, TOL, TIME)
         % Apply SVD
         [U, S, V] = svd(W);
 
-        % Calculate rotation matrix
+        % Calculate rotation matrix (transformed source to target)
         R = U * V';
 
-        % Calculate translation matrix
+        % Calculate translation matrix (transformed source to target)
         t = T_homo_centroid(1:3) - R * S_homo_centroid(1:3);
         
-        % Calculate the homogeneous transformation matrix
-        Tr = [R, t; zeros(1, 4)] * Tr;
+        % Calculate the overall homogeneous transformation matrix
+        Tr = [R, t; 0, 0, 0, 1] * Tr;
 
         % Calculate new average distance target point clouds
         e_last = e;

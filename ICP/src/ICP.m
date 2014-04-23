@@ -54,15 +54,18 @@ function [R, t] = ICP(S, T, TOL, TIME)
         t = T_homo_centroid(1:3) - R * S_homo_centroid(1:3);
         
         % Calculate the homogeneous transformation matrix
-        Tr(1:3, :) = [R, t];
+        Tr = [R, t; zeros(1, 4)] * Tr;
 
         % Calculate new average distance target point clouds
         e_last = e;
-        e = mean(abs(D));
+        e = mean(abs(D))
         
         % Stop iteration if the change of average distance is small enough
         if abs(e - e_last) / max(e_last, e) < TOL
             break;
         end
     end
+    
+    R = Tr(1:3, 1:3);
+    t = Tr(1:3, 4);
 end

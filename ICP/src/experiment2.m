@@ -6,16 +6,19 @@ function experiment2()
   file1 = files(1);
 
   S = importdata(strcat('../data/', file1.name));
+  len = 5;
 
-  for ii=2:length(files)
+  for ii=2:len
     file2 = files(ii);
-    T = importdata(file2);
+    T = importdata(strcat('../data/', file2.name));
 
     [R, t] = ICP(S, T, TOL, TIME);
 
-    S_new = S * R + t;
+    S_new = S * R + repmat(t',length(S),1);
     S_new = [S_new;T];
     S = S_new;
+
+    size(S)
   end
 
 end

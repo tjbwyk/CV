@@ -16,8 +16,8 @@ function experiment2()
   % Initialize figure
   figure;
   hold on;
-  h1 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'bo');
-  h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'ro');
+  h1 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
+  h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'r.');
 
   for ii=2:len
     ii

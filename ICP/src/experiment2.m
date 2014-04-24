@@ -7,24 +7,24 @@ function experiment2()
   files = dir('../data/*.txt');
 
   % Number of files
-  len = 20;
+  len = 100;
 
   % Initialize Source Points
   file1 = files(1);
-  Source = importdata(strcat('../data/', file1.name));
+  Target = importdata(strcat('../data/', file1.name));
 
   % Initialize figure
   figure;
   hold on;
-  h1 = plot3(Source(:, 1), Source(:, 2), Source(:, 3), 'bo');
-  h2 = plot3(Source(:, 1), Source(:, 2), Source(:, 3), 'ro');
+  h1 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'bo');
+  h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'ro');
 
   for ii=2:len
     ii
 
     % Define Target points
     file2 = files(ii);
-    Target = importdata(strcat('../data/', file2.name));
+    Source = importdata(strcat('../data/', file2.name));
 
     % Apply ICP
     [R, t, Tr, Source_h, Target_h] = ICP(Source, Target, TOL, TIME);
@@ -40,17 +40,17 @@ function experiment2()
     Target(unique(IDX), :) = [];
 
     % Merge points Source and Target
-    Source_new = [Source_h_trans(1:3,:)';Target];
+    Target_new = [Target; Source_h_trans(1:3,:)'];
 
     % Plot result
     delete(h1);
     delete(h2);
-    h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'bo');
-    h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'ro');
+    h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
+    h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'r.');
     drawnow;
 
     % Update Source Point Clouds
-    Source = Source_new;
+    Target = Target_new;
 
   end
 

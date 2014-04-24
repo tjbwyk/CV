@@ -19,8 +19,13 @@ function [points_merged] = merge_orderly(interval)
             points_merged = [points_merged; source_homo_trans(1:3, :)'];
             
             target = source;
+            
+            plot3(points_merged(:, 1), points_merged(:, 2), points_merged(:, 3), 'b.');
+            hold on;
+            plot3(source_homo_trans(1, :), source_homo_trans(2, :), source_homo_trans(3, :), 'r.');
+            grid on;
+            hold off;
+            pause(0.1);
         end
-        plot3(points_merged(:, 1), points_merged(:, 2), points_merged(:, 3), '.');
-        pause(0.1);
     end
 end

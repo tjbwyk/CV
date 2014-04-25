@@ -7,17 +7,17 @@ function experiment2()
   files = dir('../data/*.txt');
 
   % Number of files
-  len = 20;
+  len = length(files);
 
   % Initialize Source Points
   file1 = files(1);
   Source = importdata(strcat('../data/', file1.name));
 
   % Initialize figure
-  figure;
-  hold on;
-  h1 = plot3(Source(:, 1), Source(:, 2), Source(:, 3), 'bo');
-  h2 = plot3(Source(:, 1), Source(:, 2), Source(:, 3), 'ro');
+  % figure;
+  % hold on;
+  % h1 = plot3(Source(:, 1), Source(:, 2), Source(:, 3), 'bo');
+  % h2 = plot3(Source(:, 1), Source(:, 2), Source(:, 3), 'ro');
 
   for ii=2:len
     ii
@@ -43,14 +43,17 @@ function experiment2()
     Source_new = [Source_h_trans(1:3,:)';Target];
 
     % Plot result
-    delete(h1);
-    delete(h2);
-    h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'bo');
-    h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'ro');
-    drawnow;
+    % delete(h1);
+    % delete(h2);
+    % h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'bo');
+    % h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'ro');
+    % drawnow;
 
     % Update Source Point Clouds
     Source = Source_new;
+
+    filename = strcat('experiment2-', num2str(ii));
+    save(filename, 'Source', 'D');
 
   end
 

@@ -47,9 +47,9 @@ function merged_points = experiment2()
     % Plot result
     %delete(h1);
     %delete(h2);
-    h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
-    h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'r.');
-    drawnow;
+    %h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
+    %h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'r.');
+    %drawnow;
 
     % Update Source Point Clouds
     Target = Target_new;

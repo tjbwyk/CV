@@ -1,4 +1,4 @@
-function [R, t, Tr, S_homo, T_homo] = ICP(S, T, TOL, TIME)
+function [R, t, Tr, S_homo, T_homo] = ICP(S, T, TOL, TIME, Tr)
 
     % Tranform to homogeneous coordinates
     S_homo = [S, ones(length(S), 1)]';
@@ -11,7 +11,9 @@ function [R, t, Tr, S_homo, T_homo] = ICP(S, T, TOL, TIME)
     t = zeros(1, 3);
     
     % Initialize transformation matrix Tr under homogeneous coordinates
-    Tr = eye(4);
+    if nargin == 4
+        Tr = eye(4);
+    end
     
     % Build KDTree sourced on target cloud
     KDTree = KDTreeSearcher(T, 'distance', 'euclidean');
@@ -25,12 +27,12 @@ function [R, t, Tr, S_homo, T_homo] = ICP(S, T, TOL, TIME)
         % Update the source cloud
         S_homo_trans = Tr * S_homo;
         
-%         plot3(T(:, 1), T(:, 2), T(:, 3), '-');
-%         hold on;
-%         plot3(S_homo_trans(1, :), S_homo_trans(2, :), S_homo_trans(3, :), '.-');
-%         grid on;
-%         hold off;
-%         pause;
+        plot3(T(:, 1), T(:, 2), T(:, 3), 'b.');
+        hold on;
+        plot3(S_homo_trans(1, :), S_homo_trans(2, :), S_homo_trans(3, :), 'r.');
+        grid on;
+        hold off;
+        pause(0.01);
         
         % Find the closest point for each point in tranformed S to any point in T using KDTree
         [IDX, D] = knnsearch(KDTree, S_homo_trans(1:3, :)');
@@ -66,6 +68,7 @@ function [R, t, Tr, S_homo, T_homo] = ICP(S, T, TOL, TIME)
         % Calculate new average distance target point clouds
         e_last = e;
         e = mean(abs(D));
+        [i e]
         
         % Stop iteration if the change of average distance is small enough
         if abs(e - e_last) / max(e_last, e) < TOL

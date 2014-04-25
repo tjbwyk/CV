@@ -1,7 +1,7 @@
-function experiment2()
+function merged_points = experiment2()
   % Define minimum treshold and number of maximum iterations
   TOL = 0.0001;
-  TIME = 20;
+  TIME = 1e10;
 
   % Define data directory
   files = dir('../data/*.txt');
@@ -14,11 +14,13 @@ function experiment2()
   Target = importdata(strcat('../data/', file1.name));
 
   % Initialize figure
-  figure;
-  hold on;
-  h1 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
-  h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'r.');
+  %figure;
+  %hold on;
+  %h1 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
+  %h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'r.');
 
+  Tr = eye(4);
+  
   for ii=2:len
     ii
 
@@ -27,7 +29,7 @@ function experiment2()
     Source = importdata(strcat('../data/', file2.name));
 
     % Apply ICP
-    [R, t, Tr, Source_h, Target_h] = ICP(Source, Target, TOL, TIME);
+    [R, t, Tr, Source_h, Target_h] = ICP(Source, Target, TOL, TIME, Tr);
 
     % Transform Source Points
     Source_h_trans = Tr * Source_h;
@@ -43,8 +45,8 @@ function experiment2()
     Target_new = [Target; Source_h_trans(1:3,:)'];
 
     % Plot result
-    delete(h1);
-    delete(h2);
+    %delete(h1);
+    %delete(h2);
     h2 = plot3(Target(:, 1), Target(:, 2), Target(:, 3), 'b.');
     h1 = plot3(Source_h_trans(1, :)', Source_h_trans(2,:)', Source_h_trans(3,:)', 'r.');
     drawnow;
@@ -54,4 +56,5 @@ function experiment2()
 
   end
 
+  merged_points = Target;
 end

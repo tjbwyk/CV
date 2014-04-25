@@ -7,7 +7,7 @@ function merged_points = experiment2()
   files = dir('../data/*.txt');
 
   % Number of files
-  len = 100;
+  len = length(files);
 
   % Initialize Source Points
   file1 = files(1);
@@ -53,6 +53,9 @@ function merged_points = experiment2()
 
     % Update Source Point Clouds
     Target = Target_new;
+
+    filename = strcat('experiment2-', num2str(ii));
+    save(filename, 'Source', 'D');
 
   end
 

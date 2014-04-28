@@ -54,10 +54,11 @@ function merged_points = experiment2()
     % Update Source Point Clouds
     Target = Target_new;
 
-    filename = strcat('experiment2-', num2str(ii));
+    filename = strcat('../result/experiment-2/experiment2-', num2str(ii));
     save(filename, 'Target', 'D');
 
   end
 
   merged_points = Target;
+  exportMeshlab(merged_points, '../result/experiment-2/merged_points.ply')
 end

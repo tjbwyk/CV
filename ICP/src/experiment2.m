@@ -55,7 +55,7 @@ function merged_points = experiment2()
     Target = Target_new;
 
     filename = strcat('experiment2-', num2str(ii));
-    save(filename, 'Source', 'D');
+    save(filename, 'Target', 'D');
 
   end
 

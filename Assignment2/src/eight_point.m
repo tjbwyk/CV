@@ -1,14 +1,16 @@
-function [matches, scores] = eight_point(image1, image2)
+function F = eight_point(image1, image2)
 
+  % Read images
   I1 = imread(image1);
   I2 = imread(image2);
 
-  image(I1);
-  image(I2);
+  % image(I1);
+  % image(I2);
 
   I1 = single(I1);
   I2 = single(I2);
 
+  % compute SIFT frames and descriptors
   [f1, d1] = vl_sift(I1);
   [f2, d2] = vl_sift(I2);
 
@@ -22,28 +24,53 @@ function [matches, scores] = eight_point(image1, image2)
   % h3 = vl_plotsiftdescriptor(d2(:,sel),f2(:,sel));
   % set(h3,'color','g');
 
+  % matching
   [matches, scores] = vl_ubcmatch(d1, d2);
 
-  subplot(121);
-  imshow(uint8(I1));
-  hold on;
-  plot(f1(1,matches(1,:)),f1(2,matches(1,:)),'b*');
+  % subplot(121);
+  % imshow(uint8(I1));
+  % hold on;
+  % plot(f1(1,matches(1,:)),f1(2,matches(1,:)),'b*');
 
-  subplot(122);
-  imshow(uint8(I2));
-  hold on;
-  plot(f2(1,matches(2,:)),f2(2,matches(2,:)),'g*');
+  % subplot(122);
+  % imshow(uint8(I2));
+  % hold on;
+  % plot(f2(1,matches(2,:)),f2(2,matches(2,:)),'g*');
 
-  [xa1 ya1] = ds2nfu(f1(1,matches(1,:)), f1(2,matches(1,:)));
-  [xa2 ya2] = ds2nfu(f2(1,matches(2,:)), f2(2,matches(2,:)));
+  % Estimate fundamental matrix
 
-  for k=1:numel(matches(1,:))
-    xxa1 = xa1(1, k);
-    yya1 = ya1(1, k);
-    xxa2 = xa2(1, k);
-    yya2 = ya2(1, k);
+  % Normalization
+  P1 = f1(1:2,matches(1,:));
+  P2 = f2(1:2,matches(2,:));
 
-    annotation('line',[xxa1 xxa2],[yya1 yya2],'color','r');
+  [P1, T1] = normalization(P1);
+  [P2, T2] = normalization(P2);
+
+  % Construct A matrix
+  A = zeros(length(matches),9);
+
+  for (ii=1:length(matches))
+    A(ii,1) = P1(1,ii) * P2(1,ii);
+    A(ii,2) = P1(1,ii) * P2(2,ii);
+    A(ii,3) = P1(1,ii);
+    A(ii,4) = P1(2,ii) * P2(1,ii);
+    A(ii,5) = P1(2,ii) * P2(2,ii);
+    A(ii,6) = P1(2,ii);
+    A(ii,7) = P2(1,ii);
+    A(ii,8) = P2(2,ii);
+    A(ii,9) = 1;
   end
+
+  % apply SVD
+  [U,S,V] = svd(A);
+
+  % if normalization applied
+  % calculate fundamental matrix
+  F_ = V(:,size(V,2));
+  [Uf,Sf,Vf] = svd(F_);
+  F = Uf * Sf * Vf';
+
+  % denormalization
+  F = T2' * vec2mat(F,3) * T1;
 
 end

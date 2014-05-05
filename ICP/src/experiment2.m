@@ -1,4 +1,7 @@
-function merged_points = experiment2()
+function [merged_points, runtime] = experiment2()
+
+  tic;
+
   % Define minimum treshold and number of maximum iterations
   TOL = 0.0001;
   TIME = 1e10;
@@ -11,7 +14,7 @@ function merged_points = experiment2()
 
   % Initialize Source Points
   file1 = files(1);
-  Target = importdata(strcat('../data/', file1.name));
+  Target = load(strcat('../data/', file1.name));
 
   % Initialize figure
   %figure;
@@ -29,7 +32,7 @@ function merged_points = experiment2()
     Source = importdata(strcat('../data/', file2.name));
 
     % Apply ICP
-    [R, t, Tr, Source_h, Target_h] = ICP(Source, Target, TOL, TIME, Tr);
+    [R, t, Tr, Source_h, Target_h] = ICP(Source, Target, TOL, TIME);
 
     % Transform Source Points
     Source_h_trans = Tr * Source_h;
@@ -54,11 +57,13 @@ function merged_points = experiment2()
     % Update Source Point Clouds
     Target = Target_new;
 
-    filename = strcat('../result/experiment-2/experiment2-', num2str(ii));
-    save(filename, 'Target', 'D');
+    %filename = strcat('../result/experiment-2/experiment2-', num2str(ii));
+    %save(filename, 'Target', 'D');
 
   end
 
   merged_points = Target;
-  exportMeshlab(merged_points, '../result/experiment-2/merged_points.ply')
+  %exportMeshlab(merged_points, '../result/experiment-2/merged_points.ply')
+  
+  runtime = toc;
 end

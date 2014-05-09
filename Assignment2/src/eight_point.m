@@ -54,7 +54,7 @@ function [F, P1, P2] = eight_point(image1, image2)
   % Construct A matrix
   A = zeros(length(matches),9);
 
-  for (ii=1:length(matches))
+  for ii=1:length(matches)
     A(ii,1) = P1(1,ii) * P2(1,ii);
     A(ii,2) = P1(1,ii) * P2(2,ii);
     A(ii,3) = P1(1,ii);
@@ -71,11 +71,11 @@ function [F, P1, P2] = eight_point(image1, image2)
 
   % if normalization applied
   % calculate fundamental matrix
-  F_ = V(:,size(V,2));
+  F_ = reshape(V(:,end), 3, 3);
   [Uf,Sf,Vf] = svd(F_);
-  F = Uf * Sf * Vf';
+  F = Uf * diag([Sf(1,1), Sf(2, 2), 0]) * Vf';
 
   % denormalization
-  F = T2' * vec2mat(F,3) * T1;
+  F = T2' * F * T1;
 
 end

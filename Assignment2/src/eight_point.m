@@ -1,4 +1,4 @@
-function F = eight_point(image1, image2)
+function [F, P1, P2] = eight_point(image1, image2)
 
   % Read images
   I1 = imread(image1);
@@ -7,8 +7,13 @@ function F = eight_point(image1, image2)
   % image(I1);
   % image(I2);
 
-  I1 = single(I1);
-  I2 = single(I2);
+  if size(I1,3) == 3
+    I1 = single(rgb2gray(I1));
+    I2 = single(rgb2gray(I2));
+  else
+    I1 = single(I1);
+    I2 = single(I2);
+  end
 
   % compute SIFT frames and descriptors
   [f1, d1] = vl_sift(I1);

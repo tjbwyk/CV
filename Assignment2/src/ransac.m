@@ -15,8 +15,7 @@ function [best_F] = runsac(P1, P2, matches, time, threshold)
                 P2(1, sel_idx);
                 P2(2, sel_idx);
                 ones(1, 8)
-            ];
-        A = A';
+            ]';
         
         [U, D, V] = svd(A);
         
@@ -53,8 +52,7 @@ function [best_F] = runsac(P1, P2, matches, time, threshold)
             P2(1, best_inliers_idx);
             P2(2, best_inliers_idx);
             ones(1, best_inliers_num)
-        ];
-    A = A';
+        ]';
 
     [U, D, V] = svd(A);
 

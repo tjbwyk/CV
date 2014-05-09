@@ -54,17 +54,17 @@ function [F, P1, P2] = eight_point(image1, image2)
   % Construct A matrix
   A = zeros(length(matches),9);
 
-  for ii=1:length(matches)
-    A(ii,1) = P1(1,ii) * P2(1,ii);
-    A(ii,2) = P1(1,ii) * P2(2,ii);
-    A(ii,3) = P1(1,ii);
-    A(ii,4) = P1(2,ii) * P2(1,ii);
-    A(ii,5) = P1(2,ii) * P2(2,ii);
-    A(ii,6) = P1(2,ii);
-    A(ii,7) = P2(1,ii);
-    A(ii,8) = P2(2,ii);
-    A(ii,9) = 1;
-  end
+  A = [
+        P1(1, :) .* P2(1, :);
+            P1(1, :) .* P2(2, :);
+            P1(1, :);
+            P1(2, :) .* P2(1, :);
+            P1(2, :) .* P2(2, :);
+            P1(2, :);
+            P2(1, :);
+            P2(2, :);
+            ones(1, length(matches))
+      ]';
 
   % apply SVD
   [U,S,V] = svd(A);

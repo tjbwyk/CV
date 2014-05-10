@@ -1,4 +1,4 @@
-function M = chaining()
+function [M,PVM] = chaining()
   tic;
 
   % Define data directory
@@ -9,12 +9,11 @@ function M = chaining()
   % len = 3;
 
   M = zeros(len,1);
-  Dict = zeros(len,1,2);
-  new_index_column = zeros(len,1);
-  m_index = 0;
+  PVM = cell(len,0);
 
   % Construct Point-View Matrix
   for ii=1:len
+    ii
     index_1 = ii;
 
     if ii == len
@@ -29,47 +28,38 @@ function M = chaining()
 
     [F, P1, P2] = eight_point(image_1_file, image_2_file);
 
-    for jj=1:length(P1)
+    for ii=1:length(P1)
+      % find points in PV Matrix
       found = false;
+      found_col = 0;
 
-      for kk=1:size(Dict,2)
-        if Dict(index_1,kk,1) == P1(1,jj) && Dict(index_1,kk,2) == P1(2,jj)
+      for kk=1:size(PVM,2)
+        if isequal(PVM{index_1,kk},P1(ii))
           found = true;
+          found_col = kk;
+          break;
         end
       end
 
       if found
+        PVM{index_2,found_col} = P2(ii);
       else
-        new_index_column(index_1) = new_index_column(index_1) + 1;
-        m_index = m_index + 1;
-
-        Dict(index_1,new_index_column(index_1),1) = P1(1,jj);
-        Dict(index_1,new_index_column(index_1),2) = P1(2,jj);
-
-        M(index_1,m_index) = 1;
+        PVM{index_1,end + 1} = P1(ii);
+        PVM{index_2,end} = P2(ii);
       end
+        
     end
 
-    for jj=1:length(P2)
-      found = false;
+  end
 
-      for kk=1:size(Dict,2)
-        if Dict(index_2,kk,1) == P2(1,jj) && Dict(index_2,kk,2) == P2(2,jj)
-          found = true;
-        end
-      end
-
-      if found
+  for ii=1:size(PVM,1)
+    for jj=1:size(PVM,2)
+      if isempty(PVM{ii,jj})
+        M(ii,jj) = 1;
       else
-        new_index_column(index_2) = new_index_column(index_2) + 1;
-
-        Dict(index_2,new_index_column(index_2),1) = P2(1,jj);
-        Dict(index_2,new_index_column(index_2),2) = P2(2,jj);
-
-        M(index_2,m_index) = 1;
+        M(ii,jj) = 0;
       end
     end
-
   end
 
   runtime = toc;

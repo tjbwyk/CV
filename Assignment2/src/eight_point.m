@@ -18,13 +18,16 @@ function [F, P1, P2, I1, I2] = eight_point(image1, image2)
   % extract the object
   [x11, y11, x12, y12] = objDetect(I1);
   [x21, y21, x22, y22] = objDetect(I2);
-  I1 = I1(x11:x12, y11:y12);
-  I2 = I2(x21:x22, y21:y22);
   
   % compute SIFT frames and descriptors
-  [f1, d1] = vl_sift(I1);
-  [f2, d2] = vl_sift(I2);
+  [f1, d1] = vl_sift(I1(x11:x12, y11:y12));
+  [f2, d2] = vl_sift(I2(x21:x22, y21:y22));
 
+  f1(1, :) = f1(1, :) + (x11 - 1);
+  f1(2, :) = f1(2, :) + (y11 - 1);
+  f2(1, :) = f2(1, :) + (x21 - 1);
+  f2(2, :) = f2(2, :) + (y21 - 1);
+  
   % perm = randperm(size(f2,2));
   % sel = perm(1:50);
   % h1 = vl_plotframe(f2(:,sel));

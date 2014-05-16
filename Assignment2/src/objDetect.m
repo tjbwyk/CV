@@ -1,4 +1,4 @@
-function [x1, y1, x2, y2] = objDetect(I)
+function [mask, x1, y1, x2, y2] = objDetect(I)
 
     % Detect Entire Cell
     [~, threshold] = edge(I, 'sobel');
@@ -36,4 +36,6 @@ function [x1, y1, x2, y2] = objDetect(I)
             end
         end
     end
+    
+    mask = BWfinal;
 end

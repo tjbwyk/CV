@@ -6,7 +6,7 @@ function [M,PVM] = chaining()
 
   % Number of files
   len = length(files);
-  % len = 3;
+  len = 3;
 
   M = zeros(len,1);
   PVM = cell(len,0);
@@ -34,7 +34,7 @@ function [M,PVM] = chaining()
       found_col = 0;
 
       for kk=1:size(PVM,2)
-        if isequal(PVM{index_1,kk},P1(ii))
+        if isequal(PVM{index_1,kk},P1(1:2,ii))
           found = true;
           found_col = kk;
           break;
@@ -42,10 +42,10 @@ function [M,PVM] = chaining()
       end
 
       if found
-        PVM{index_2,found_col} = P2(ii);
+        PVM{index_2,found_col} = P2(1:2,ii);
       else
-        PVM{index_1,end + 1} = P1(ii);
-        PVM{index_2,end} = P2(ii);
+        PVM{index_1,end + 1} = P1(1:2,ii);
+        PVM{index_2,end} = P2(1:2,ii);
       end
         
     end

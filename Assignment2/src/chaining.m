@@ -1,12 +1,11 @@
-function [M,PVM] = chaining()
+function [M,PVM] = chaining(foldername)
   tic;
 
   % Define data directory
-  files = dir('../data/TeddyBear/*.png');
+  files = dir(['../data/', foldername, '/*.png']);
 
   % Number of files
   len = length(files);
-  len = 3;
 
   M = zeros(len,1);
   PVM = cell(len,0);
@@ -23,10 +22,23 @@ function [M,PVM] = chaining()
     end
 
     % Load image
-    image_1_file = strcat('../data/TeddyBear/', files(index_1).name);
-    image_2_file = strcat('../data/TeddyBear/', files(index_2).name);
+    image_1_file = strcat(['../data/' foldername, '/'], files(index_1).name);
+    image_2_file = strcat(['../data/' foldername, '/'], files(index_2).name);
 
-    [F, P1, P2] = eight_point(image_1_file, image_2_file);
+    % Extract features
+    if ii == 1
+        [I1, mask1, f1, d1] = features(image_1_file);
+        [I2, mask2, f2, d2] = features(image_2_file);
+    else
+        I1 = I2;
+        mask1 = mask2;
+        f1 = f2;
+        d1 = d2;
+        [I2, mask2, f2, d2] = features(image_2_file);
+    end
+    
+    % Calculating Transformation Matrix
+    [F, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2);
 
     for ii=1:length(P1)
       % find points in PV Matrix

@@ -55,6 +55,11 @@ function [F, P1, P2, I1, I2] = eight_point(image1, image2)
   % Normalization
   P1 = f1(1:2,matches(1,:));
   P2 = f2(1:2,matches(2,:));
+  
+  % Show point pairs
+  idx = randperm(length(matches), 50);
+  figure;
+  showMatchedFeatures(I1, I2, P1(:, idx)', P2(:, idx)', 'montage');
 
   [P1, T1] = normalization(P1);
   [P2, T2] = normalization(P2);

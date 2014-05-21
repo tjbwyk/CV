@@ -11,14 +11,14 @@ function [M,PVM] = chaining(foldername)
   PVM = cell(len,0);
 
   % Construct Point-View Matrix
-  for ii=1:len
-    ii
-    index_1 = ii;
+  for i=1:len
+    i
+    index_1 = i;
 
-    if ii == len
+    if i == len
       index_2 = 1;
     else
-      index_2 = ii+1;
+      index_2 = i+1;
     end
 
     % Load image
@@ -26,7 +26,7 @@ function [M,PVM] = chaining(foldername)
     image_2_file = strcat(['../data/' foldername, '/'], files(index_2).name);
 
     % Extract features
-    if ii == 1
+    if i == 1
         [I1, mask1, f1, d1] = features(image_1_file);
         [I2, mask2, f2, d2] = features(image_2_file);
     else
@@ -38,15 +38,24 @@ function [M,PVM] = chaining(foldername)
     end
     
     % Calculating Transformation Matrix
-    [F, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2);
+    [F, matches, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2);
 
-    for ii=1:length(P1)
+    for j = 1 : length(matches)
+        Pnum1 = matches(1, j);
+        Pnum2 = matches(2, j);
+        x1 = P1(1, Pnum1);
+        y1 = P1(2, Pnum1);
+        x2 = P2(1, Pnum2);
+        y2 = P2(2, Pnum2);
+    end
+    
+    for i=1:length(P1)
       % find points in PV Matrix
       found = false;
       found_col = 0;
 
       for kk=1:size(PVM,2)
-        if isequal(PVM{index_1,kk},P1(1:2,ii))
+        if isequal(PVM{index_1,kk},P1(1:2,i))
           found = true;
           found_col = kk;
           break;
@@ -54,22 +63,22 @@ function [M,PVM] = chaining(foldername)
       end
 
       if found
-        PVM{index_2,found_col} = P2(1:2,ii);
+        PVM{index_2,found_col} = P2(1:2,i);
       else
-        PVM{index_1,end + 1} = P1(1:2,ii);
-        PVM{index_2,end} = P2(1:2,ii);
+        PVM{index_1,end + 1} = P1(1:2,i);
+        PVM{index_2,end} = P2(1:2,i);
       end
         
     end
 
   end
 
-  for ii=1:size(PVM,1)
-    for jj=1:size(PVM,2)
-      if isempty(PVM{ii,jj})
-        M(ii,jj) = 1;
+  for i=1:size(PVM,1)
+    for j=1:size(PVM,2)
+      if isempty(PVM{i,j})
+        M(i,j) = 1;
       else
-        M(ii,jj) = 0;
+        M(i,j) = 0;
       end
     end
   end

@@ -12,7 +12,7 @@ function [F, matches, P1, P2, I1, I2] = eight_point(I1, I2, f1, f2, d1, d2)
   P2_match = f2(1:2,matches(2,:));
   
   % Show point pairs
-  idx = randperm(length(matches), 50);
+  idx = randperm(length(matches), min(50, length(matches)));
   figure;
   showMatchedFeatures(I1, I2, P1_match(:, idx)', P2_match(:, idx)', 'montage');
 

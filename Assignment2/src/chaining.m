@@ -1,5 +1,16 @@
-function [M,PVM] = chaining(foldername)
+function [M,PVM] = chaining(foldername, para)
   tic;
+  
+  if nargin == 2
+      if strcmp(para, 'ransac')
+          ran = true;
+      else
+          display(['Unrecognized parameter ', para]);
+          return;
+      end
+  else
+      ran = false;
+  end
 
   % Define data directory
   files = dir(['../data/', foldername, '/*.png']);
@@ -38,7 +49,11 @@ function [M,PVM] = chaining(foldername)
     end
     
     % Calculating Transformation Matrix
-    [F, matches, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2);
+    if ran
+        [F, matches, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2, para);
+    else
+        [F, matches, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2);
+    end
 
     for j = 1 : length(matches)
         Pnum1 = matches(1, j);

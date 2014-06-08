@@ -5,7 +5,6 @@
 #include <pcl/features/normal_3d.h>
 #include <pcl/surface/gp3.h>
 #include <pcl/io/vtk_io.h>
-#include <pcl/surface/mls.h>
 
 int main(int argc, char** argv) {	
 	pcl::PCLPointCloud2 cloud_blob;
@@ -31,32 +30,12 @@ int main(int argc, char** argv) {
 //			<< std::endl;
 
 	// Transform the data into an appropriate type
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_with_normals(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_with_normals(new pcl::PointCloud<pcl::PointNormal>);
 	pcl::fromPCLPointCloud2(cloud_blob, *cloud_with_normals);	
 
-	// Create a KD-Tree
-	pcl::search::KdTree<pcl::PointXYZ>::Ptr tree1(new pcl::search::KdTree<pcl::PointXYZ>);
-
-	// New PointNormal type with normals calculated by MLS
-	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_mls(new pcl::PointCloud<pcl::PointNormal>);
-	
-	// Init object (second point type is for the normals, even if unused)
-	pcl::MovingLeastSquares<pcl::PointXYZ, pcl::PointNormal> mls;
-
-	mls.setComputeNormals(true);
-
-	// Set parameters
-	mls.setInputCloud(cloud_with_normals);
-	mls.setPolynomialFit(true);
-	mls.setSearchMethod(tree1);
-	mls.setSearchRadius(0.03);
-
-	// Reconstruct
-	mls.process(*cloud_mls);
-
 	// Create search tree
-	pcl::search::KdTree<pcl::PointNormal>::Ptr tree2(new pcl::search::KdTree<pcl::PointNormal>);
-	tree2->setInputCloud(cloud_mls);
+	pcl::search::KdTree<pcl::PointNormal>::Ptr tree(new pcl::search::KdTree<pcl::PointNormal>);
+	tree->setInputCloud(cloud_with_normals);
 	
 	// Initialize objects
 	pcl::GreedyProjectionTriangulation<pcl::PointNormal> gp3;
@@ -67,23 +46,23 @@ int main(int argc, char** argv) {
 
 	// Set typicla values for the parameters
 	gp3.setMu(2.5);
-	gp3.setMaximumNearestNeighbors(200);
+	gp3.setMaximumNearestNeighbors(150);
 	gp3.setMaximumSurfaceAngle(M_PI / 4); // 45 degrees
 	gp3.setMinimumAngle(M_PI / 18); // 10 degrees
 	gp3.setMaximumAngle(2 * M_PI / 3); // 120 degrees
 	gp3.setNormalConsistency(false);
 	
 	// Get result
-	gp3.setInputCloud(cloud_mls);
-	gp3.setSearchMethod(tree2);
+	gp3.setInputCloud(cloud_with_normals);
+	gp3.setSearchMethod(tree);
 	gp3.reconstruct(triangles);
 
 	// Additional vertex information
 	std::vector<int> parts = gp3.getPartIDs();
 	std::vector<int> states = gp3.getPointStates();
 
-	// Save the result
-	pcl::io::saveVTKFile("mesh_mls.vtk", triangles);
+	// Save triangulation result
+	pcl::io::saveVTKFile("mesh.vtk", triangles);
 
 	// Finish
 	return 0;

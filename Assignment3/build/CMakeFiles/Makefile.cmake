@@ -13,6 +13,8 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "/home/tommy/workspaces/CV/Assignment3/src/CMakeLists.txt"
   "/usr/lib/vtk-5.8/CMake/vtkMakeInstantiator.cmake"
   "/usr/lib/vtk-5.8/UseVTK.cmake"
+  "/usr/lib/vtk-5.8/VTKConfig-Python.cmake"
+  "/usr/lib/vtk-5.8/VTKConfig-Tcl.cmake"
   "/usr/lib/vtk-5.8/VTKConfig.cmake"
   "/usr/lib/vtk-5.8/VTKConfigQt.cmake"
   "/usr/lib/vtk-5.8/VTKConfigVersion.cmake"

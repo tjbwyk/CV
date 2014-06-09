@@ -215,11 +215,9 @@ CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/PointIndices.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/PolygonMesh.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/Vertices.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/cloud_iterator.h
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/centroid.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/common.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/concatenate.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/eigen.h
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/impl/centroid.hpp
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/impl/common.hpp
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/impl/eigen.hpp
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/common/impl/io.hpp
@@ -232,10 +230,6 @@ CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/console/print.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/conversions.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/correspondence.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/exceptions.h
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/features/feature.h
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/features/impl/feature.hpp
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/features/impl/normal_3d.hpp
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/features/normal_3d.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/for_each_type.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/impl/cloud_iterator.hpp
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/impl/pcl_base.hpp
@@ -276,8 +270,7 @@ CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/search/organized.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/search/pcl_search.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/search/search.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/surface/boost.h
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/surface/gp3.h
-CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/surface/impl/gp3.hpp
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/surface/impl/reconstruction.hpp
+CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/surface/poisson.h
 CMakeFiles/main.dir/main.cpp.o: /usr/include/pcl-1.7/pcl/surface/reconstruction.h
 

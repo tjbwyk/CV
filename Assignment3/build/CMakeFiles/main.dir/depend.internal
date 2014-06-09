@@ -216,11 +216,9 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/pcl-1.7/pcl/PolygonMesh.h
  /usr/include/pcl-1.7/pcl/Vertices.h
  /usr/include/pcl-1.7/pcl/cloud_iterator.h
- /usr/include/pcl-1.7/pcl/common/centroid.h
  /usr/include/pcl-1.7/pcl/common/common.h
  /usr/include/pcl-1.7/pcl/common/concatenate.h
  /usr/include/pcl-1.7/pcl/common/eigen.h
- /usr/include/pcl-1.7/pcl/common/impl/centroid.hpp
  /usr/include/pcl-1.7/pcl/common/impl/common.hpp
  /usr/include/pcl-1.7/pcl/common/impl/eigen.hpp
  /usr/include/pcl-1.7/pcl/common/impl/io.hpp
@@ -233,10 +231,6 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/pcl-1.7/pcl/conversions.h
  /usr/include/pcl-1.7/pcl/correspondence.h
  /usr/include/pcl-1.7/pcl/exceptions.h
- /usr/include/pcl-1.7/pcl/features/feature.h
- /usr/include/pcl-1.7/pcl/features/impl/feature.hpp
- /usr/include/pcl-1.7/pcl/features/impl/normal_3d.hpp
- /usr/include/pcl-1.7/pcl/features/normal_3d.h
  /usr/include/pcl-1.7/pcl/for_each_type.h
  /usr/include/pcl-1.7/pcl/impl/cloud_iterator.hpp
  /usr/include/pcl-1.7/pcl/impl/pcl_base.hpp
@@ -277,7 +271,6 @@ CMakeFiles/main.dir/main.cpp.o
  /usr/include/pcl-1.7/pcl/search/pcl_search.h
  /usr/include/pcl-1.7/pcl/search/search.h
  /usr/include/pcl-1.7/pcl/surface/boost.h
- /usr/include/pcl-1.7/pcl/surface/gp3.h
- /usr/include/pcl-1.7/pcl/surface/impl/gp3.hpp
  /usr/include/pcl-1.7/pcl/surface/impl/reconstruction.hpp
+ /usr/include/pcl-1.7/pcl/surface/poisson.h
  /usr/include/pcl-1.7/pcl/surface/reconstruction.h

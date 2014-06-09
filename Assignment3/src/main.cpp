@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
 	// Init Poisson object
 	pcl::Poisson<pcl::PointNormal> poisson;
 	poisson.setInputCloud(cloud_with_normals);
+	poisson.setDepth(10);
 
 	// Get result
 	pcl::PolygonMesh triangles;

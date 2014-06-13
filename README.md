@@ -84,4 +84,4 @@ And then run the command:
 
         ./main XXX.pcd
 
-to get the resule mesh ``mesh.vtk`` under /build. The vtk file can be easily viewed with ParaVeiw
+to get the resule mesh ``mesh.vtk`` under /build. The vtk file can be easily viewed with ParaVeiw. Two pre-generated vtk files are already under the /data folder ready for visualization.

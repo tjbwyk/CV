@@ -54,7 +54,7 @@ We can simply run the second merging scenario by running this following command:
 
 ### Assignment 3
 
-
+#### Structure from Motion
 Once we obtain Point View Matrix from the Assignment 2, we can estimate 3D structure buy running the main function. Run this following command from the src/ directory:
 
     main(PVM)

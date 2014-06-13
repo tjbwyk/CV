@@ -38,4 +38,6 @@ function [mask, x1, y1, x2, y2] = objDetect(I)
     end
     
     mask = BWfinal;
+    
+    mask(x1:x2, y1:y2) = 1;
 end

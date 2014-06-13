@@ -55,6 +55,7 @@ function [M,PVM] = chaining(foldername, para)
         [F, matches, P1, P2] = eight_point(I1, I2, f1, f2, d1, d2);
     end
 
+    % Build the Point View Matrix
     for j = 1 : length(matches)
         Pnum1 = matches(1, j);
         Pnum2 = matches(2, j);
@@ -82,6 +83,7 @@ function [M,PVM] = chaining(foldername, para)
     end
   end
 
+  % Build the visualization of PVM
   for i=1:size(PVM,1)
     for j=1:size(PVM,2)
       if isempty(PVM{i,j})

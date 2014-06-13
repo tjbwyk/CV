@@ -1,5 +1,6 @@
 function [points_merged, runtime] = merge_orderly(interval, TOL, TIME)
     
+    % Set start timestamp
     tic;
 
     for i = 0 : interval : 99
@@ -11,10 +12,16 @@ function [points_merged, runtime] = merge_orderly(interval, TOL, TIME)
             target = source;
             points_merged = source;
         else
+            % ICP function, transform the source point cloud to the target point cloud
             [R, t, Tr, source_homo, target_homo] = ICP(source, target, TOL, TIME);
+            
+            % Multiply up the homogeneous transformation matrix
             Tr_all = Tr * Tr_all;
+            
+            % Calculate the new position of the source point cloud
             source_homo_trans = Tr_all * source_homo;
             
+            % Merge the two point clouds
             KDTree = KDTreeSearcher(points_merged);
             [IDX, D] = knnsearch(KDTree, source_homo_trans(1:3, :)');
             points_merged(IDX, :) = [];

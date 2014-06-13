@@ -1,3 +1,5 @@
+% Filter out the data that belong to the background
+
 for i = 0 : 99
     infilename = sprintf('data/%010d.pcd', i);
     data = readPcd(infilename);

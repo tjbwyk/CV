@@ -22,9 +22,6 @@ function [F, matches, P1, P2, I1, I2] = eight_point(I1, I2, f1, f2, d1, d2, para
   P1_match = f1(1:2,matches(1,:));
   P2_match = f2(1:2,matches(2,:));
 
-  % Show point pairs
-  idx = randperm(length(matches), min(50, length(matches)));
-
   [P1_match_norm, T1] = normalization(P1_match);
   [P2_match_norm, T2] = normalization(P2_match);
 
@@ -56,12 +53,13 @@ function [F, matches, P1, P2, I1, I2] = eight_point(I1, I2, f1, f2, d1, d2, para
       F = Uf * diag([Sf(1,1), Sf(2, 2), 0]) * Vf';
   end
 
-  figure;
-  showMatchedFeatures(I1, I2, P1_match(:, inliers_idx)', P2_match(:, inliers_idx)', 'montage');
-  figure;
-  outliers_idx = 1 : length(matches);
-  outliers_idx(inliers_idx) = [];
-  showMatchedFeatures(I1, I2, P1_match(:, outliers_idx)', P2_match(:, outliers_idx)', 'montage');
+  % Show inliers and outliers
+%   figure;
+%   showMatchedFeatures(I1, I2, P1_match(:, inliers_idx)', P2_match(:, inliers_idx)', 'montage');
+%   figure;
+%   outliers_idx = 1 : length(matches);
+%   outliers_idx(inliers_idx) = [];
+%   showMatchedFeatures(I1, I2, P1_match(:, outliers_idx)', P2_match(:, outliers_idx)', 'montage');
   
   % denormalization
   F = T2' * F * T1; 

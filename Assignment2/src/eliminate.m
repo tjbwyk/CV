@@ -1,3 +1,5 @@
+% seperate the points based on the mask covered on the object
+
 function [f, d] = eliminate(f, d, mask)
     l = length(f);
     s = size(mask);

@@ -1,3 +1,4 @@
+% Generate feature points
 function [I, mask, f, d] = features(filename)
     I = imread(filename);
     

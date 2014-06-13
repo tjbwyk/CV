@@ -10,6 +10,7 @@ run the script.
 
 ## Author
 Yikang Wang
+
 Arif Qodari
 
 
@@ -25,34 +26,33 @@ command:
 
     [R, t, Tr, S_homo, T_homo] = ICP(S, T, TOL, TIME, Tr)
 
-    * S is source point cloud
-    * T is target point cloud
-    * TOL is minimum tolerance value
-    * TIME is maximum iteration
-    * Tr is initial transformation matrix
+* S is source point cloud
+* T is target point cloud
+* TOL is minimum tolerance value
+* TIME is maximum iteration
+* Tr is initial transformation matrix
 
-    It will return these following values:
+It will return these following values:
 
-    * R is rotation matrix
-    * t is translation vector
-    * Tr is transformation matrix (combined rotation matrix and translation
-      vector)
-    * S_homo is source point cloud in homogeneous coordinates
-    * T_homo is target point cloud in homogeneous coordinates
-    * 
+* R is rotation matrix
+* t is translation vector
+* Tr is transformation matrix (combined rotation matrix and translation
+  vector)
+* S_homo is source point cloud in homogeneous coordinates
+* T_homo is target point cloud in homogeneous coordinates
 
 #### Merging Scene - Scenario 1
 
-We can simply run the basic first merging scenario by running this following
+We can simply run the first merging scenario by running this following
 command:
 
     [points_merged, runtime] = merge_orderly(interval, TOL, TIME)
         
-        * interval is the number of interval images that will be merged
+* interval is the number of interval images that will be merged
 
 #### Merging Scene - Scenario 2
 
-We can simply run the basic second merging scenario by running this following
+We can simply run the second merging scenario by running this following
 command:
 
     [merged_points, runtime] = experiment2()

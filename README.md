@@ -51,7 +51,17 @@ We can simply run the second merging scenario by running this following command:
     [merged_points, runtime] = experiment2()
 
 ### Assignment 2
+We can simply run the chaining procedure by running this following command:
 
+    [M,PVM] = chaining(foldername)
+    [M,PVM] = chaining(foldername, 'ransac')
+
+* foldername is the data to use, it can be either ``TeddyBear`` or ``House``
+* 'ransac' it the parameter, specifying whether to use the Ransac method
+
+It will return the following values:
+* M is the patch view matrix for visualization
+* PVM is the patch view matrix with a special format, which can be parse by the code in the first part of assignment 3.
 ### Assignment 3
 
 #### Structure from Motion
